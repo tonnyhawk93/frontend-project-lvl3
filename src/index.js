@@ -1,6 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 // eslint-disable-next-line
 import bootstrap from 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import app from './app.js';
+import runApp from './runApp.js';
 
-app();
+runApp();

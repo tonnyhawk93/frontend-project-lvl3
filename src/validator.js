@@ -1,4 +1,10 @@
-import { string } from 'yup';
+import { string, setLocale } from 'yup';
+
+setLocale({
+  string: {
+    url: 'errors.url',
+  },
+});
 
 const urlSchema = string().url().required();
 

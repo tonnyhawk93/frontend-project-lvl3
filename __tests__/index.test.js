@@ -14,11 +14,11 @@ test('validateUrl валидирует', async () => {
   expect(result).toBeTruthy();
 });
 
-test('validateUrl возращает правильное сообщение', async () => {
+test('validateUrl возращает правильное сообщение при ошибке', async () => {
   try {
     const result = await validateUrl(fakeUrl);
     expect(result).not.toBeTruthy();
   } catch (e) {
-    expect(e.message).toEqual('this must be a valid URL');
+    expect(e.message).toEqual('errors.url');
   }
 });
