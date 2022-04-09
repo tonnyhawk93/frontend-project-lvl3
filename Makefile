@@ -1,7 +1,7 @@
 install:
 	npm ci
 lint:
-	npx eslint . --fix
+	npm run lint
 test:
 	npm test
 test-coverage:
