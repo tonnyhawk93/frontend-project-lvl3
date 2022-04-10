@@ -3,7 +3,13 @@ import textToXmlConverter from './parser/domParser.js';
 import { validateUrl } from './validator.js';
 import watch from './view.js';
 import getRssStream from './getRssStream.js';
+import updatePosts from './updatePosts.js';
 
+const updatePostProcess = (state) => {
+  setTimeout(() => {
+    updatePosts(state).then(() => updatePostProcess(state));
+  }, 5000);
+};
 const form = document.querySelector('form');
 
 const initialState = {
@@ -49,6 +55,7 @@ const app = (i18) => {
         state.errors = message;
       });
   });
+  updatePostProcess(state);
 };
 
 export default app;

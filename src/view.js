@@ -33,10 +33,12 @@ const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
     }
   }
   if (path.startsWith('feeds')) {
+    feedsContainer.innerHTML = '';
     const feedsList = createFeedsList(value);
     feedsContainer.append(feedsList);
   }
   if (path.startsWith('posts')) {
+    postsContainer.innerHTML = '';
     const postsList = createPostsList(value);
     postsContainer.append(postsList);
   }
