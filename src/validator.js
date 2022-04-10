@@ -3,6 +3,7 @@ import { string, setLocale } from 'yup';
 setLocale({
   string: {
     url: 'error.url',
+    required: 'error.empty',
   },
 });
 

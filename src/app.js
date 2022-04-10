@@ -22,6 +22,17 @@ const initialState = {
 const app = (i18) => {
   const state = watch(initialState, i18);
 
+  const updatePostProcess = () => {
+    setTimeout(() => {
+      updatePosts(state).then((newPosts) => {
+        if (newPosts.length) {
+          state.posts = [...state.posts, ...newPosts];
+        }
+        updatePostProcess(state);
+      });
+    }, 5000);
+  };
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -83,7 +94,8 @@ const app = (i18) => {
       });
     });
   });
-  updatePosts(state);
+
+  updatePostProcess();
 };
 
 export default app;

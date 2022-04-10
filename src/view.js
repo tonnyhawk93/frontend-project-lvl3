@@ -55,7 +55,7 @@ const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
     submitButton.classList.remove('disabled');
 
     if (value === 'success') {
-      form.reset();
+      form.elements.url.value = '';
       form.elements.url.focus();
       const errorFeedback = formContainer.querySelector('#errorFeedback');
       if (errorFeedback) errorFeedback.remove();
