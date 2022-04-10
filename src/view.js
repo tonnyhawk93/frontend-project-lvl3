@@ -3,13 +3,12 @@ import { createErrorFeedback, createSuccessFeedback } from './components/createE
 import { createPostsList, createFeedsList } from './components/createPostsList.js';
 import renderModal from './components/renderModal.js';
 
-const form = document.querySelector('form');
-const formContainer = document.querySelector('#formContainer');
-const postsContainer = document.querySelector('#postsContainer');
-const feedsContainer = document.querySelector('#feedsContainer');
-const submitButton = document.querySelector('button[type="submit"]');
-
 const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
+  const form = document.querySelector('form');
+  const formContainer = document.querySelector('#formContainer');
+  const postsContainer = document.querySelector('#postsContainer');
+  const feedsContainer = document.querySelector('#feedsContainer');
+  const submitButton = document.querySelector('button[type="submit"]');
   if (path.startsWith('activePostId')) {
     const activePost = state.posts.find((post) => post.id === value);
     renderModal(activePost, i18);
