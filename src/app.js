@@ -5,9 +5,6 @@ import watch from './view.js';
 import getRssStream from './getRssStream.js';
 import updatePosts from './updatePosts.js';
 
-const form = document.querySelector('form');
-const postsContainer = document.querySelector('#postsContainer');
-
 const initialState = {
   urls: [],
   feeds: [],
@@ -21,6 +18,8 @@ const initialState = {
 };
 const app = (i18) => {
   const state = watch(initialState, i18);
+  const form = document.querySelector('form');
+  const postsContainer = document.querySelector('#postsContainer');
 
   const updatePostProcess = () => {
     setTimeout(() => {
