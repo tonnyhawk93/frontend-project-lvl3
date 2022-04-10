@@ -4,5 +4,3 @@ import bootstrap from 'bootstrap';
 import runApp from './init.js';
 
 runApp();
-
-export default runApp;
