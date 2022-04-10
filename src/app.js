@@ -5,22 +5,23 @@ import watch from './view.js';
 import getRssStream from './getRssStream.js';
 import updatePosts from './updatePosts.js';
 
-const initialState = {
-  urls: [],
-  feeds: [],
-  posts: [],
-  activePost: null,
-  error: null,
-  status: 'default',
-  form: {
-    isValid: true,
-  },
-};
 const app = (i18) => {
+  const initialState = {
+    urls: [],
+    feeds: [],
+    posts: [],
+    activePost: null,
+    error: null,
+    status: 'default',
+    form: {
+      isValid: true,
+    },
+  };
+
   const state = watch(initialState, i18);
   const form = document.querySelector('form');
   const postsContainer = document.querySelector('#postsContainer');
-
+  
   const updatePostProcess = () => {
     setTimeout(() => {
       updatePosts(state).then((newPosts) => {
