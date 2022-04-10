@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 const config = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/runApp.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),

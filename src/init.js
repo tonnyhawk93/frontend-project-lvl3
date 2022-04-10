@@ -1,4 +1,7 @@
 import i18next from 'i18next';
+import 'bootstrap/dist/css/bootstrap.min.css';
+// eslint-disable-next-line
+import bootstrap from 'bootstrap';
 import ru from './locales/ru.js';
 import app from './app.js';
 
