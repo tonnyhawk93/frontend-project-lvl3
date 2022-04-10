@@ -5,7 +5,7 @@ import domParser from './parser/domParser.js';
 const updatePosts = (state) => {
   const currentPosts = state.posts;
   const { urls } = state;
-  if (urls.length) {
+  if (urls && urls.length) {
     const data = urls.map((url) => getRssStream(url).then(domParser).then(parser));
     return Promise.all(data)
       .then((responses) => responses.reduce((acc, { feed, posts }) => {

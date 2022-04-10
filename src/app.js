@@ -21,11 +21,11 @@ const app = (i18) => {
   const state = watch(initialState, i18);
   const form = document.querySelector('form');
   const postsContainer = document.querySelector('#postsContainer');
-  
+
   const updatePostProcess = () => {
     setTimeout(() => {
       updatePosts(state).then((newPosts) => {
-        if (newPosts.length) {
+        if (newPosts && newPosts.length) {
           state.posts = [...state.posts, ...newPosts];
         }
         updatePostProcess(state);
@@ -71,12 +71,11 @@ const app = (i18) => {
     buttons.forEach((button) => {
       button.addEventListener('click', (e) => {
         const postId = e.target.dataset.id;
-        state.activePostId = postId;
+        state.activePost = state.posts.find((post) => post.id === postId);
         state.posts = state.posts.map((post) => {
           if (post.id === postId) {
             return { ...post, visited: true };
           }
-
           return post;
         });
       });

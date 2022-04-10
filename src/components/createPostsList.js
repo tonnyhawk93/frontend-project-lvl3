@@ -1,6 +1,8 @@
+import renderModal from './renderModal.js';
+
 const createPostListItem = ({
-  id, title, link, visited,
-}) => {
+  id, title, link, visited, description,
+}, i18) => {
   const li = document.createElement('li');
   li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
   const linkElement = document.createElement('a');
@@ -12,10 +14,12 @@ const createPostListItem = ({
   linkElement.textContent = title;
   const button = document.createElement('button');
   button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-  button.textContent = 'Показать';
+  button.textContent = 'Просмотр';
+  button.addEventListener('click', () => {
+    renderModal({ title, link, description }, i18);
+    linkElement.classList.remove('fw-bold');
+  });
   button.dataset.id = id;
-  button.setAttribute('data-bs-toggle', 'modal');
-  button.setAttribute('data-bs-target', '#modal');
   li.append(linkElement, button);
 
   return li;
@@ -35,11 +39,11 @@ const createCard = (title) => {
   return card;
 };
 
-export const createPostsList = (posts, state) => {
+export const createPostsList = (posts, i18) => {
   const card = createCard('Посты');
   const list = document.createElement('ul');
   list.classList.add('list-group', 'border-0', 'rounded-0');
-  const listItems = posts.map((post) => createPostListItem(post, state));
+  const listItems = posts.map((post) => createPostListItem(post, i18));
   list.append(...listItems);
   card.append(list);
 
