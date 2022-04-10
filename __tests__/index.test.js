@@ -1,6 +1,8 @@
 import { fileURLToPath } from 'url';
+import fs from 'fs/promises';
 import path from 'path';
 import { validateUrl } from '../src/validator';
+import parser from '../src/parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,5 +22,14 @@ test('validateUrl возращает правильное сообщение п�
     expect(result).not.toBeTruthy();
   } catch (e) {
     expect(e.message).toEqual('errors.url');
+  }
+});
+
+test('Парсер возращает правильную ошибку при невалидном xml', async () => {
+  try {
+    const response = await fs.readFile(getFixturePath('invalidXml.xml', 'utf-8'));
+    expect(parser(response)).not.toBeTruthy();
+  } catch (error) {
+    expect(error.message).toEqual('errors.parseError');
   }
 });

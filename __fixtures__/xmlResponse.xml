@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Новые уроки на Хекслете</title>
+    <description>Практические уроки по программированию</description>
+    <link>https://ru.hexlet.io/</link>
+    <webMaster>info@hexlet.io</webMaster>
+    <item>
+      <title>Метод main / Java: Основы программирования</title>
+      <guid isPermaLink="false">2573</guid>
+      <link>https://ru.hexlet.io/courses/java-basics/lessons/method-main/theory_unit</link>
+      <description>Цель: Разобраться, для чего нужен метод main</description>
+      <pubDate>Wed, 06 Apr 2022 11:59:07 +0000</pubDate>
+    </item>
+    <item>
+      <title>Как написать резюме и сопроводительное письмо на английском языке / Трудоустройство</title>
+      <guid isPermaLink="false">2572</guid>
+      <link>https://ru.hexlet.io/courses/employment/lessons/cover-letter/theory_unit</link>
+      <description>Цель: Как оформить CV и Cover Letter</description>
+      <pubDate>Wed, 06 Apr 2022 06:15:22 +0000</pubDate>
+    </item>
+  </channel>
+</rss>

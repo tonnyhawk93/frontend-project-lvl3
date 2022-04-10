@@ -1,29 +1,52 @@
+import parser from './parser/index.js';
+import textToXmlConverter from './parser/domParser.js';
 import { validateUrl } from './validator.js';
 import watch from './view.js';
+import getRssStream from './getRssStream.js';
 
 const form = document.querySelector('form');
 
 const initialState = {
   urls: [],
+  feeds: [],
+  posts: [],
+  error: null,
+  status: 'default',
   form: {
-    errors: {},
+    isValid: true,
   },
 };
-
-const app = (i18nextInstance) => {
-  const state = watch(initialState, i18nextInstance);
+const app = (i18) => {
+  const state = watch(initialState, i18);
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const url = formData.get('url').trim();
-    validateUrl(url).then(() => {
-      if (state.urls.includes(url)) throw new Error('errors.addedBefore');
-      if (state.form.errors.url) state.form.errors.url = null;
-      state.urls = [...state.urls, url];
-    })
+    validateUrl(url)
+      .then(() => {
+        state.status = 'loading';
+        if (state.urls.includes(url)) throw new Error('errors.addedBefore');
+        state.form.isValid = true;
+        return url;
+      })
+      .catch((error) => {
+        state.form.isValid = false;
+        throw error;
+      })
+      .then(getRssStream)
+      .then(textToXmlConverter)
+      .then(parser)
+      .then(({ feed, posts }) => {
+        state.urls = [...state.urls, url];
+        state.feeds = [...state.feeds, feed];
+        state.posts = [...state.posts, ...posts];
+        state.status = 'success';
+        state.errors = null;
+      })
       .catch(({ message }) => {
-        state.form.errors.url = message;
+        state.status = 'error';
+        state.errors = message;
       });
   });
 };
