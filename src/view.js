@@ -1,6 +1,7 @@
 import onChange from 'on-change';
 import { createErrorFeedback, createSuccessFeedback } from './components/createErrorFeedback.js';
 import { createPostsList, createFeedsList } from './components/createPostsList.js';
+import renderModal from './components/renderModal.js';
 
 const form = document.querySelector('form');
 const formContainer = document.querySelector('#formContainer');
@@ -9,6 +10,11 @@ const feedsContainer = document.querySelector('#feedsContainer');
 const submitButton = document.querySelector('button[type="submit"]');
 
 const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
+  if (path.startsWith('activePostId')) {
+    const activePost = state.posts.find((post) => post.id === value);
+    renderModal(activePost, i18);
+  }
+
   if (path.startsWith('form.isValid')) {
     if (value) {
       form.elements.url.classList.remove('is-invalid');
@@ -17,7 +23,7 @@ const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
     }
   }
 
-  if (path.startsWith('errors')) {
+  if (path.startsWith('error')) {
     let errorFeedback = formContainer.querySelector('#errorFeedback');
     if (value) {
       if (value !== prevValue) {
@@ -38,10 +44,13 @@ const watch = (state, i18) => onChange(state, (path, value, prevValue) => {
     feedsContainer.append(feedsList);
   }
   if (path.startsWith('posts')) {
-    postsContainer.innerHTML = '';
-    const postsList = createPostsList(value);
-    postsContainer.append(postsList);
+    if (value.length) {
+      postsContainer.innerHTML = '';
+      const postsList = createPostsList(value, watch);
+      postsContainer.append(postsList);
+    }
   }
+
   if (path.startsWith('status')) {
     submitButton.classList.remove('disabled');
 

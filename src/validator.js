@@ -2,7 +2,7 @@ import { string, setLocale } from 'yup';
 
 setLocale({
   string: {
-    url: 'errors.url',
+    url: 'error.url',
   },
 });
 

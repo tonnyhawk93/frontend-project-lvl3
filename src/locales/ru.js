@@ -6,11 +6,15 @@ const ru = {
     submit: 'Добавить',
     show: 'Просмотр',
     successMessage: 'RSS успешно загружен',
-    errors: {
+    error: {
       url: 'Ссылка должна быть валидным URL',
       addedBefore: 'RSS уже существует',
       parseError: 'Ресурс не содержит валидный RSS',
       netError: 'Ошибка сети',
+    },
+    modal: {
+      read: 'Читать полностью',
+      close: 'Закрыть',
     },
   },
 };

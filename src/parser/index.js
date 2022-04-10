@@ -10,12 +10,14 @@ const parser = (xml) => {
       const post = {};
       Array.from(item.children).forEach((child) => { post[child.nodeName] = child.textContent; });
       post.feedId = link;
+      post.id = post.guid + post.feedId;
+      post.visited = false;
       posts.push(post);
     });
 
     return { feed, posts };
   } catch (error) {
-    throw new Error('errors.parseError');
+    throw new Error('error.parseError');
   }
 };
 

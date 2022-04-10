@@ -21,7 +21,7 @@ test('validateUrl возращает правильное сообщение п�
     const result = await validateUrl(fakeUrl);
     expect(result).not.toBeTruthy();
   } catch (e) {
-    expect(e.message).toEqual('errors.url');
+    expect(e.message).toEqual('error.url');
   }
 });
 
@@ -30,6 +30,6 @@ test('Парсер возращает правильную ошибку при �
     const response = await fs.readFile(getFixturePath('invalidXml.xml', 'utf-8'));
     expect(parser(response)).not.toBeTruthy();
   } catch (error) {
-    expect(error.message).toEqual('errors.parseError');
+    expect(error.message).toEqual('error.parseError');
   }
 });

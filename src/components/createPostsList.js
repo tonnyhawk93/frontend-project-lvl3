@@ -1,9 +1,11 @@
-const createPostListItem = ({ guid, title, link }) => {
+const createPostListItem = ({
+  id, title, link, visited,
+}) => {
   const li = document.createElement('li');
   li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
   const linkElement = document.createElement('a');
-  linkElement.classList.add('fw-bold');
-  linkElement.dataset.id = guid;
+  linkElement.classList.add(visited ? ('fw-normal', 'link-secondary') : 'fw-bold');
+  linkElement.dataset.id = id;
   linkElement.setAttribute('target', '_blank');
   linkElement.setAttribute('rel', 'noopener noreferrer');
   linkElement.href = link;
@@ -11,7 +13,7 @@ const createPostListItem = ({ guid, title, link }) => {
   const button = document.createElement('button');
   button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
   button.textContent = 'Показать';
-  button.dataset.id = guid;
+  button.dataset.id = id;
   button.setAttribute('data-bs-toggle', 'modal');
   button.setAttribute('data-bs-target', '#modal');
   li.append(linkElement, button);
@@ -33,11 +35,11 @@ const createCard = (title) => {
   return card;
 };
 
-export const createPostsList = (posts) => {
+export const createPostsList = (posts, state) => {
   const card = createCard('Посты');
   const list = document.createElement('ul');
   list.classList.add('list-group', 'border-0', 'rounded-0');
-  const listItems = posts.map(createPostListItem);
+  const listItems = posts.map((post) => createPostListItem(post, state));
   list.append(...listItems);
   card.append(list);
 

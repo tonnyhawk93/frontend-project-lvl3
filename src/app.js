@@ -5,17 +5,14 @@ import watch from './view.js';
 import getRssStream from './getRssStream.js';
 import updatePosts from './updatePosts.js';
 
-const updatePostProcess = (state) => {
-  setTimeout(() => {
-    updatePosts(state).then(() => updatePostProcess(state));
-  }, 5000);
-};
 const form = document.querySelector('form');
+const postsContainer = document.querySelector('#postsContainer');
 
 const initialState = {
   urls: [],
   feeds: [],
   posts: [],
+  activePost: null,
   error: null,
   status: 'default',
   form: {
@@ -32,7 +29,7 @@ const app = (i18) => {
     validateUrl(url)
       .then(() => {
         state.status = 'loading';
-        if (state.urls.includes(url)) throw new Error('errors.addedBefore');
+        if (state.urls.includes(url)) throw new Error('error.addedBefore');
         state.form.isValid = true;
         return url;
       })
@@ -48,14 +45,45 @@ const app = (i18) => {
         state.feeds = [...state.feeds, feed];
         state.posts = [...state.posts, ...posts];
         state.status = 'success';
-        state.errors = null;
+        state.error = null;
       })
       .catch(({ message }) => {
         state.status = 'error';
-        state.errors = message;
+        state.error = message;
       });
   });
-  updatePostProcess(state);
+
+  postsContainer.addEventListener('DOMSubtreeModified', () => {
+    const buttons = postsContainer.querySelectorAll('button');
+    const postLinks = postsContainer.querySelectorAll('a');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        const postId = e.target.dataset.id;
+        state.activePostId = postId;
+        state.posts = state.posts.map((post) => {
+          if (post.id === postId) {
+            return { ...post, visited: true };
+          }
+
+          return post;
+        });
+      });
+    });
+    postLinks.forEach((postLink) => {
+      postLink.addEventListener('click', (e) => {
+        const postId = e.target.dataset.id;
+        state.posts = state.posts.map((post) => {
+          if (post.id === postId) {
+            return { ...post, visited: true };
+          }
+
+          return post;
+        });
+      });
+    });
+  });
+  updatePosts(state);
 };
 
 export default app;

@@ -14,11 +14,21 @@ const updatePosts = (state) => {
         const newCurrentFeedPosts = posts.filter(predicat);
         return [...acc, ...newCurrentFeedPosts];
       }, []))
-      // eslint-disable-next-line no-param-reassign
-      .then((newPosts) => { state.posts = [...state.posts, ...newPosts]; })
+      .then((newPosts) => {
+        if (newPosts.length) {
+          // eslint-disable-next-line no-param-reassign
+          state.posts = [...state.posts, ...newPosts];
+        }
+      })
       .catch(() => { throw new Error('error.netError'); });
   }
   return Promise.resolve();
 };
 
-export default updatePosts;
+const updatePostProcess = (state) => {
+  setTimeout(() => {
+    updatePosts(state).then(() => updatePostProcess(state));
+  }, 5000);
+};
+
+export default updatePostProcess;
